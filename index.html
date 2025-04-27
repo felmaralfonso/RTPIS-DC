@@ -24,7 +24,7 @@
             min-height: auto; /* Allow sections to be shorter */
             padding: 6rem 5% 4rem 5%; /* Reduced vertical padding */
             border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-            scroll-margin-top: 70px;
+            scroll-margin-top: 10px;
         }
         .content-section:last-child { border-bottom: none; min-height: 50vh; }
         .section-content-wrapper { max-width: 1100px; margin: 0 auto; text-align: center; }
@@ -33,14 +33,14 @@
             color: #ffffff; position: relative; display: inline-block; padding-bottom: 0.75rem;
         }
         .section-title::after {
-            content: ''; position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); width: 350px; height: 5px;
+            content: ''; position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); width: 450px; height: 5px;
             background: linear-gradient(90deg, #14b8a6, #0ea5e9); border-radius: 3px;
         }
         .section-subtitle { font-size: 1.4rem; font-weight: 500; margin-bottom: 2rem; color: #94a3b8; }
-        p { font-size: 1.05rem; line-height: 1.7; margin-bottom: 0.75rem; color: #cbd5e1; max-width: 800px; margin-left: auto; margin-right: auto; } /* Slightly smaller text */
+        p { font-size: 1.8rem; line-height: 1.7; margin-bottom: 0.75rem; color: #cbd5e1; max-width: 800px; margin-left: auto; margin-right: auto; } /* Slightly smaller text */
         .meta-info { font-size: 0.9rem; color: #64748b; margin-top: 1rem; }
         .points-list { list-style: none; padding-left: 0; text-align: left; margin: 1.5rem auto 0; max-width: 700px; } /* Reduced margins */
-        .points-list li { margin-bottom: 1rem; font-size: 1.05rem; line-height: 1.6; position: relative; padding-left: 2rem; color: #e2e8f0; }
+        .points-list li { margin-bottom: 1rem; font-size: 1.6rem; line-height: 1.6; position: relative; padding-left: 2rem; color: #e2e8f0; }
       
         .points-list strong { font-weight: 700; color: #ffffff; }
 
@@ -241,8 +241,7 @@
                 <h1 class="section-title !text-4xl md:!text-5xl">Enhancing Commuter Experience</h1>
                 <h2 class="section-subtitle !text-xl md:!text-2xl mt-4">A Real-Time PUV Arrival Information System for Digos City</h2>
                 <p class="mt-6">Presented by: <strong>Felmar Alfonso, Hannah Labajo, Jan Kenneth Geraldo, Adrian Alfonso</strong></p>
-                <p class="meta-info">UGE 2-Technical Writing Across Discipline</p>
-                <p id="presentation-date" class="meta-info"></p>
+                
                 <div class="image-container mt-8">
                     <img src="imgs/bus.jpg" alt="Conceptual graphic representing connected transport network" class="section-image max-h-[300px] md:max-h-[325px]">
                 </div>
