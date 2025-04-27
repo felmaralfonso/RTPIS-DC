@@ -1,0 +1,885 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RTPIS-DC Project Overview</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Poppins:wght@500;700;900&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+     integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+     crossorigin=""/>
+
+    <style>
+        body {
+            font-family: 'Lato', sans-serif;
+            background-color: #0f172a;
+            color: #e2e8f0;
+        }
+        h1, h2, h3, .nav-link { font-family: 'Poppins', sans-serif; }
+        .content-section {
+            min-height: auto; /* Allow sections to be shorter */
+            padding: 6rem 5% 4rem 5%; /* Reduced vertical padding */
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            scroll-margin-top: 70px;
+        }
+        .content-section:last-child { border-bottom: none; min-height: 50vh; }
+        .section-content-wrapper { max-width: 1100px; margin: 0 auto; text-align: center; }
+        .section-title {
+            font-size: 2.5rem; font-weight: 700; margin-bottom: 1.5rem;
+            color: #ffffff; position: relative; display: inline-block; padding-bottom: 0.75rem;
+        }
+        .section-title::after {
+            content: ''; position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); width: 350px; height: 5px;
+            background: linear-gradient(90deg, #14b8a6, #0ea5e9); border-radius: 3px;
+        }
+        .section-subtitle { font-size: 1.4rem; font-weight: 500; margin-bottom: 2rem; color: #94a3b8; }
+        p { font-size: 1.05rem; line-height: 1.7; margin-bottom: 0.75rem; color: #cbd5e1; max-width: 800px; margin-left: auto; margin-right: auto; } /* Slightly smaller text */
+        .meta-info { font-size: 0.9rem; color: #64748b; margin-top: 1rem; }
+        .points-list { list-style: none; padding-left: 0; text-align: left; margin: 1.5rem auto 0; max-width: 700px; } /* Reduced margins */
+        .points-list li { margin-bottom: 1rem; font-size: 1.05rem; line-height: 1.6; position: relative; padding-left: 2rem; color: #e2e8f0; }
+      
+        .points-list strong { font-weight: 700; color: #ffffff; }
+
+        #conclusion ul ul.list-disc { list-style-type: disc; margin-left: 1.5rem; }
+        #conclusion > .section-content-wrapper > .points-list > li > ul { padding-left: 1.5rem; }
+        #conclusion > .section-content-wrapper > .points-list > li::before { display: none; }
+        #conclusion > .section-content-wrapper > .points-list > li { padding-left: 0; }
+
+
+        .image-container { margin-top: 2rem; padding: 0.5rem; background-color: rgba(255, 255, 255, 0.0); border-radius: 12px; display: inline-block; max-width: 100%; border: 1px solid rgba(255, 255, 255, 0.08); }
+        .section-image { display: block; max-width: 100%; height: auto; max-height: 300px; border-radius: 8px; box-shadow: 0 6px 20px rgba(0,0,0,0.2); } /* Reduced max-height */
+        .icon-container { display: flex; justify-content: center; gap: 2.5rem; margin-top: 2rem; flex-wrap: wrap; }
+        .icon-item { display: flex; flex-direction: column; align-items: center; text-align: center; }
+        .icon-item svg { width: 50px; height: 50px; margin-bottom: 0.75rem; fill: #0ea5e9; filter: drop-shadow(0 0 5px rgba(14, 165, 233, 0.4)); }
+        .icon-item span { font-size: 0.9rem; color: #94a3b8; max-width: 110px; }
+        .dynamic-row { display: flex; align-items: center; justify-content: space-around; text-align: left; gap: 3rem; width: 100%; }
+        .dynamic-col-text { flex: 1 1 50%; min-width: 250px; }
+        .dynamic-col-visual { flex: 1 1 45%; display: flex; justify-content: center; align-items: center; min-width: 300px; }
+        @media (max-width: 768px) {
+            .dynamic-row { flex-direction: column; text-align: center; }
+            .dynamic-col-text, .dynamic-col-visual { flex-basis: auto; width: 100%; text-align: center; }
+            .dynamic-col-text .points-list, .dynamic-col-text h1 { text-align: left; margin-left: auto; margin-right: auto; }
+            .dynamic-col-text p { text-align: left; max-width: 90%; margin: 1rem auto;}
+            .dynamic-col-visual { margin-top: 2rem; }
+        }
+        .hardware-grid {
+            display: grid;
+            /* Enforce 3 columns */
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            margin-top: 2rem;
+            max-width: 900px;
+            width: 100%;
+            margin-left: auto;
+            margin-right: auto;
+            /* Center the grid container itself if needed, though max-width often handles this */
+            /* justify-content: center; */
+            /* Center items within their cells */
+            justify-items: center;
+         }
+        .component-item { background-color: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 10px; padding: 1.25rem; text-align: center; transition: transform 0.3s ease, box-shadow 0.3s ease; } /* Reduced padding */
+        .component-item:hover { transform: translateY(-5px); box-shadow: 0 8px 20px rgba(14, 165, 233, 0.15); }
+        .component-item img { display: block; margin: 0 auto 1rem auto; max-width: 80px; height: 60px; border-radius: 4px; background-color: #475569; object-fit: contain; } /* Smaller image */
+        .component-item h3 { font-family: 'Poppins', sans-serif; font-size: 1rem; color: #38bdf8; margin-bottom: 0.5rem; }
+        .component-item p { font-size: 0.85rem; color: #94a3b8; line-height: 1.5; } /* Smaller text */
+
+        #webapp-map-container {
+            height: 400px; width: 100%; border-radius: 10px; overflow: hidden; /* Reduced height */
+            border: 1px solid rgba(255, 255, 255, 0.1); box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            background-color: #e2e8f0; position: relative;
+        }
+        #webapp-map { height: 100%; width: 100%; z-index: 1; }
+        .leaflet-div-icon { background: transparent; border: none; }
+        .bus-marker-icon {
+            width: 22px; height: 22px; border-radius: 50%; border: 2px solid #ffffff;
+            display: flex; align-items: center; justify-content: center; font-size: 10px;
+            font-weight: bold; color: #ffffff; box-shadow: 0 1px 3px rgba(0,0,0,0.4);
+            text-align: center; line-height: 18px;
+        }
+        .bus-marker-a { background-color: #3b82f6; }
+        .bus-marker-b { background-color: #ef4444; }
+        .bus-marker-c { background-color: #10b981; }
+        .bus-marker-d { background-color: #f97316; }
+        .bus-marker-e { background-color: #8b5cf6; }
+        .bus-marker-f { background-color: #14b8a6; }
+        .bus-marker-g { background-color: #ec4899; }
+        .stop-marker-icon {
+             width: 10px; height: 10px; background-color: #4b5563; border-radius: 50%;
+             border: 1.5px solid white; box-shadow: 0 1px 2px rgba(0,0,0,0.2);
+        }
+        .user-location-marker {
+            width: 16px; height: 16px; background-color: #3b82f6;
+            border-radius: 50%; border: 2px solid white;
+            box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.3);
+        }
+        .leaflet-popup-content-wrapper { border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.15); }
+        .leaflet-popup-content { margin: 12px; font-size: 0.875rem; line-height: 1.5; color: #374151; }
+        .leaflet-popup-content b { font-weight: 600; color: #111827; display: block; margin-bottom: 4px; }
+        .leaflet-popup-content p { margin: 4px 0; font-size: 0.8rem; }
+        .leaflet-popup-close-button { padding: 6px 6px 0 0 !important; }
+
+        #device-3d-container {
+            height: 350px; width: 100%; max-width: 550px; margin: 2rem auto 0 auto; /* Reduced height/width */
+            border-radius: 10px; overflow: hidden; border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2); background-color: #e2e8f0; position: relative;
+        }
+         #device-3d-container canvas { display: block; }
+         #device-3d-info {
+             position: absolute; bottom: 10px; width: 100%; text-align: center;
+             color: #4a5568; font-family: Arial, sans-serif; font-size: 11px; z-index: 10; /* Smaller info text */
+             pointer-events: none;
+         }
+         #image-popup {
+            position: absolute; background-color: #fff; border: 1px solid #cbd5e1;
+            border-radius: 4px; padding: 5px; box-shadow: 0 3px 8px rgba(0,0,0,0.2);
+            z-index: 100; display: none; pointer-events: none; max-width: 150px;
+        }
+        #image-popup img { display: block; max-width: 100%; height: auto; }
+        #image-popup figcaption { font-size: 10px; text-align: center; color: #4a5568; margin-top: 3px; }
+
+        #main-nav {
+            position: fixed; top: 0; left: 0; width: 100%; background-color: rgba(15, 23, 42, 0.85);
+            backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); z-index: 100;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3); padding: 0.75rem 5%; transition: background-color 0.3s ease;
+        }
+        #main-nav.scrolled { background-color: rgba(15, 23, 42, 0.95); }
+        .nav-container { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
+        .nav-logo { font-weight: 900; font-size: 1.5rem; color: #ffffff; letter-spacing: -0.5px; }
+        .nav-logo span { color: #0ea5e9; }
+        .nav-links { display: flex; gap: 1rem; }
+        .nav-link {
+            color: #94a3b8; text-decoration: none; font-weight: 500; font-size: 0.9rem;
+            padding: 0.5rem 0.75rem; border-radius: 6px; transition: color 0.3s ease, background-color 0.3s ease;
+            position: relative; text-transform: uppercase; letter-spacing: 0.5px;
+        }
+        .nav-link::after {
+            content: ''; position: absolute; width: 0; height: 2px; bottom: -2px; left: 50%;
+            background: linear-gradient(90deg, #14b8a6, #0ea5e9); transition: width 0.3s ease, left 0.3s ease;
+        }
+        .nav-link:hover, .nav-link.active { color: #ffffff; }
+        .nav-link:hover::after, .nav-link.active::after { width: 100%; left: 0; }
+        #menu-toggle { display: none; }
+        .menu-button-container { display: none; }
+        @media (max-width: 900px) {
+             .nav-links {
+                display: none; position: absolute; top: 100%; left: 0; width: 100%;
+                background-color: rgba(15, 23, 42, 0.98); flex-direction: column;
+                align-items: center; padding: 1rem 0; box-shadow: 0 5px 10px rgba(0,0,0,0.2);
+             }
+             #menu-toggle:checked + .menu-button-container + .nav-links { display: flex; }
+             .menu-button-container { display: flex; align-items: center; justify-content: center; cursor: pointer; padding: 0.5rem; }
+             .menu-button, .menu-button::before, .menu-button::after {
+                display: block; background-color: #fff; position: absolute; height: 3px; width: 25px;
+                border-radius: 2px; transition: transform 400ms cubic-bezier(0.23, 1, 0.32, 1);
+             }
+             .menu-button::before { content: ''; margin-top: -8px; }
+             .menu-button::after { content: ''; margin-top: 8px; }
+             #menu-toggle:checked + .menu-button-container .menu-button::before { margin-top: 0px; transform: rotate(405deg); }
+             #menu-toggle:checked + .menu-button-container .menu-button { background: rgba(255, 255, 255, 0); }
+             #menu-toggle:checked + .menu-button-container .menu-button::after { margin-top: 0px; transform: rotate(-405deg); }
+             .nav-link { width: 80%; text-align: center; padding: 1rem; }
+             .nav-link::after { display: none; }
+        }
+
+        @media (max-width: 768px) {
+            .section-title { font-size: 2.1rem; }
+            .section-subtitle { font-size: 1.3rem; }
+            p, .points-list li { font-size: 1rem; }
+            .points-list { max-width: 90%; }
+            .section-image { max-height: 250px; } /* Adjusted */
+            .icon-item svg { width: 45px; height: 45px; }
+            .icon-container { gap: 1.5rem; }
+            .hardware-grid { grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1.5rem; justify-content: center; }
+            .component-item img { max-width: 80px; height: 60px;}
+            #webapp-map-container { height: 350px; } /* Adjusted */
+            #device-3d-container { height: 300px; } /* Adjusted */
+        }
+        @media (max-width: 480px) {
+            .section-title { font-size: 1.8rem; }
+            .section-subtitle { font-size: 1.2rem; }
+            .section-image { max-height: 500px; } /* Adjusted */
+            .icon-item svg { width: 40px; height: 40px; }
+            .icon-item span { font-size: 0.85rem; }
+            .hardware-grid { grid-template-columns: 1fr;justify-content: center; }
+            .component-item img { max-width: 70px; height: 50px;}
+            #webapp-map-container { height: 300px; } /* Adjusted */
+            #device-3d-container { height: 250px; } /* Adjusted */
+        }
+    </style>
+</head>
+<body>
+
+    <nav id="main-nav">
+        <div class="nav-container">
+            <a href="#hero" class="nav-logo">RTPIS<span>-DC</span></a>
+             <input id="menu-toggle" type="checkbox" />
+            <label class='menu-button-container' for="menu-toggle">
+                <div class='menu-button'></div>
+            </label>
+            <div class="nav-links">
+                <a href="#hero" class="nav-link active">Home</a>
+                <a href="#introduction" class="nav-link">Intro</a>
+                <a href="#solution" class="nav-link">Solution</a>
+                <a href="#overview" class="nav-link">Overview</a>
+                <a href="#hardware" class="nav-link">Hardware</a>
+                <a href="#benefits" class="nav-link">Benefits</a>
+                <a href="#challenges" class="nav-link">Challenges</a>
+                <a href="#conclusion" class="nav-link">Conclusion</a>
+                <a href="#qa" class="nav-link">Q&A</a>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+
+        <section id="hero" class="content-section flex flex-col justify-center items-center text-center">
+             <div class="section-content-wrapper">
+                <h1 class="section-title !text-4xl md:!text-5xl">Enhancing Commuter Experience</h1>
+                <h2 class="section-subtitle !text-xl md:!text-2xl mt-4">A Real-Time PUV Arrival Information System for Digos City</h2>
+                <p class="mt-6">Presented by: <strong>Felmar Alfonso, Hannah Labajo, Jan Kenneth Geraldo, Adrian Alfonso</strong></p>
+                <p class="meta-info">UGE 2-Technical Writing Across Discipline</p>
+                <p id="presentation-date" class="meta-info"></p>
+                <div class="image-container mt-8">
+                    <img src="imgs/bus.jpg" alt="Conceptual graphic representing connected transport network" class="section-image max-h-[300px] md:max-h-[325px]">
+                </div>
+            </div>
+        </section>
+
+        <section id="introduction" class="content-section">
+            <div class="section-content-wrapper">
+                <h1 class="section-title">Introduction</h1>
+                <p class="max-w-3xl mx-auto mt-4">
+                    Commuters in Digos City often face uncertainty regarding Public Utility Vehicle (PUV) arrivals.
+                    This lack of real-time information leads to long waiting times and inefficient travel planning.
+                    This project proposes a technological solution: the Real-Time PUV Information System (RTPIS-DC).
+                    Our aim is to reduce waiting times, minimize uncertainty, and improve the daily commute.
+                </p>
+                        </div>
+        </section>
+
+        <section id="solution" class="content-section">
+             <div class="section-content-wrapper">
+                <h1 class="section-title">Proposed Solution: RTPIS-DC</h1>
+                 <p class="max-w-3xl mx-auto mt-4">
+                    RTPIS-DC provides live PUV locations and accurate Estimated Times of Arrival (ETAs).
+                    Commuters access this information via an intuitive web application.
+                    This allows for better planning and reduces anxiety associated with unpredictable waits.
+                    The system leverages GPS, cellular networks, and web technologies.
+                 </p>
+                <div class="icon-container">
+                    <div class="icon-item">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 0 1 0-5a2.5 2.5 0 0 1 0 5z"/></svg>
+                        <span>Live Tracking</span>
+                    </div>
+                    <div class="icon-item">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8s8 3.58 8 8s-3.58 8-8 8zm.5-13H11v6l5.25 3.15l.75-1.23l-4.5-2.67z"/></svg>
+                        <span>Accurate ETAs</span>
+                    </div>
+                    <div class="icon-item">
+                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M19 4H5a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2zm0 14H5V8h14v10zM5 6h14v1H5z"/></svg>
+                        <span>Web Access</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="overview" class="content-section">
+            <div class="section-content-wrapper">
+                <div class="dynamic-row">
+                    <div class="dynamic-col-text">
+                        <h1 class="section-title !text-left">System Overview & Interface</h1>
+                        <p class="mt-4">
+                            PUVs are equipped with GPS tracking units that send location data to a central server.
+                            The server processes this data, matches it to routes, and calculates ETAs.
+                            Commuters view live PUV locations and arrival times on an interactive map via a web app.
+                            The <a href = "old/software.html" >interface</a> is designed for ease of use on both desktop and mobile devices.
+                        </p>
+                    </div>
+                    <div class="dynamic-col-visual">
+                         <div id="webapp-map-container">
+                             <div id="webapp-map"></div>
+                         </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="hardware" class="content-section">
+            <div class="section-content-wrapper">
+                <h1 class="section-title">Hardware Prototype</h1>
+                <p class="max-w-3xl mx-auto mt-4">
+                    Each participating PUV requires a reliable tracking unit.
+                    Below is an interactive 3D model showcasing the device concept.
+                    Key components include GPS, a microcontroller, a cellular modem, and a power supply,
+                    all housed within a durable enclosure suitable for vehicle environments.
+                </p>
+                <div id="device-3d-container">
+                     
+                     <div id="image-popup">
+                        <img id="popup-img" src="" alt="Component Image">
+                        <figcaption id="popup-caption"></figcaption>
+                    </div>
+                </div>
+                
+                <div class="hardware-grid mt-10">
+                     <div class="component-item">
+                        <img src="imgs/esp32.jpg" alt="Placeholder image of a microcontroller board like ESP32">
+                        <h3>Microcontroller (e.g., ESP32)</h3>
+                        <p>Processes GPS data and manages communication.</p>
+                    </div>
+                    <div class="component-item">
+                        <img src="imgs/gps.jpg" alt="Placeholder image of a GPS receiver module like NEO-6M">
+                        <h3>GPS Module (e.g., NEO-6M)</h3>
+                        <p>Determines precise vehicle location via satellite signals.</p>
+                    </div>
+                    <div class="component-item">
+                        <img src="imgs/gsm-gprs.webp" alt="Placeholder image of a GSM/GPRS cellular modem like SIM800L">
+                        <h3>GSM/GPRS Module (e.g., SIM800L)</h3>
+                        <p>Transmits location data to the server using a SIM card.</p>
+                    </div>
+                    
+                    <div class="component-item">
+                        <img src="imgs/powersupply.jpg" alt="Placeholder image of a DC-DC power supply converter">
+                        <h3>Power Supply Unit</h3>
+                        <p>Converts vehicle voltage (12V/24V) to required levels (5V/3.3V).</p>
+                    </div>
+                    <div class="component-item">
+                        <img src="imgs/box.jpg" alt="Placeholder image of a rugged protective enclosure">
+                        <h3>Durable Enclosure</h3>
+                        <p>Protects electronics from dust, vibration, and moisture.</p>
+                    </div>
+               
+                </div>
+            </div>
+        </section>
+
+        <section id="benefits" class="content-section">
+             <div class="section-content-wrapper">
+                <h1 class="section-title">Benefits of RTPIS-DC</h1>
+                 <p class="max-w-3xl mx-auto mt-4">
+                     This system offers significant advantages across Digos City:
+                 </p>
+                <ul class="points-list">
+                    <li><strong>Commuters:</strong> Reduced waiting, effective trip planning, less stress.</li>
+                    <li><strong>Operators:</strong> Route monitoring data, potential efficiency gains, service reliability proof.</li>
+                    <li><strong>Digos City LGU:</strong> Improved public service, potential increase in PUV usage, alignment with modernization goals.</li>
+                </ul>
+                <div class="icon-container">
+                    <div class="icon-item">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M1 21h4V9H1v12zm22-11c0-1.1-.9-2-2-2h-6.31l.95-4.57l.03-.32c0-.41-.17-.79-.44-1.06L14.17 1L7.59 7.59C7.22 7.95 7 8.45 7 9v10c0 1.1.9 2 2 2h9c.83 0 1.54-.5 1.84-1.22l3.02-7.05c.09-.23.14-.47.14-.73v-2z"/></svg>
+                        <span>Happier Commuters</span>
+                    </div>
+                    <div class="icon-item">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-4h2v4zm4 0h-2v-7h2v7zm4 0h-2V7h2v10z"/></svg>
+                        <span>Operational Efficiency</span>
+                    </div>
+                    <div class="icon-item">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M10 20v-6h4v6h5v-8h3L12 3L2 12h3v8z"/></svg>
+                        <span>City Modernization</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="challenges" class="content-section">
+            <div class="section-content-wrapper">
+                <h1 class="section-title">Potential Challenges & Mitigation</h1>
+                <p class="max-w-3xl mx-auto mt-4">
+                    We anticipate potential hurdles and have planned mitigation strategies:
+                </p>
+                <ul class="points-list">
+                    <li><strong>Challenge: Operator Adoption.</strong> Mitigation: Early engagement, demonstrate benefits, offer support/subsidies.</li>
+                    <li><strong>Challenge: Initial Cost.</strong> Mitigation: Use cost-effective hardware, phased rollout, seek funding (LGU, grants).</li>
+                    <li><strong>Challenge: Connectivity/Accuracy.</strong> Mitigation: Choose best network, implement data buffering, use filtering algorithms.</li>
+                    <li><strong>Challenge: Digital Divide.</strong> Mitigation: Start with accessible web app, explore SMS/public displays later.</li>
+                </ul>
+            </div>
+        </section>
+
+        <section id="conclusion" class="content-section">
+            <div class="section-content-wrapper">
+                <h1 class="section-title">Conclusion & Recommendations</h1>
+                <ul class="points-list">
+                    <li><strong>Conclusion:</strong> RTPIS-DC is a feasible and beneficial solution using existing tech to address a clear community need in Digos City.</li>
+                    <li><strong>Recommendations / Next Steps:</strong>
+                        <ul class="list-disc mt-4 text-left">
+                            <li>Conduct detailed feasibility study (costs, surveys, technical).</li>
+                            <li>Formalize partnerships (LGU, transport cooperatives).</li>
+                            <li>Develop and test prototype hardware/software on limited PUVs.</li>
+                            <li>Seek funding for a pilot project on major routes.</li>
+                         </ul>
+                     </li>
+                </ul>
+                 <div class="image-container mt-8">
+                    <img src="imgs/buswait.jpg" alt="Conceptual graphic representing progress and collaboration" class="section-image max-h-[150px] md:max-h-[250px]">
+                </div>
+            </div>
+        </section>
+
+        <section id="qa" class="content-section">
+            <div class="section-content-wrapper">
+                <h1 class="section-title">Thank You & Q&A</h1>
+                <p class="max-w-3xl mx-auto mt-6">We appreciate your time and consideration of this proposal.</p>
+         
+                <div class="icon-container mt-10">
+                    <div class="icon-item">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="!w-[70px] !h-[70px]"><path d="M21 6h-2v9H6v2c0 .55.45 1 1 1h11l4 4V7c0-.55-.45-1-1-1zm-4 6V4c0-.55-.45-1-1-1H3c-.55 0-1 .45-1 1v14l4-4h10c.55 0 1-.45 1-1z"/></svg>
+                        <p class="max-w-3xl mx-auto mt-6">We welcome any questions you may have regarding our presentation.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+     integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+     crossorigin=""></script>
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/geometries/RoundedBoxGeometry.js"></script>
+
+    <script>
+        const nav = document.getElementById('main-nav');
+        const navLinks = document.querySelectorAll('.nav-link');
+        const sections = document.querySelectorAll('section[id]');
+
+        function setPresentationDate() {
+            const dateElement = document.getElementById('presentation-date');
+            if (dateElement) {
+                const today = new Date();
+                const options = { year: 'numeric', month: 'long', day: 'numeric' };
+                try {
+                     dateElement.textContent = `Presented on: ${today.toLocaleDateString('en-PH', options)}`;
+                } catch (e) {
+                     dateElement.textContent = `Presented on: ${today.toLocaleDateString('en-US', options)}`;
+                }
+            }
+        }
+
+        function handleScroll() {
+            if (window.scrollY > 50) {
+                nav.classList.add('scrolled');
+            } else {
+                nav.classList.remove('scrolled');
+            }
+
+            let currentSectionId = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop - nav.offsetHeight - 50;
+                const sectionBottom = sectionTop + section.offsetHeight;
+                if (window.scrollY >= sectionTop && window.scrollY < sectionBottom) {
+                    currentSectionId = section.getAttribute('id');
+                }
+            });
+
+             if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight - 50) {
+                const lastSection = sections[sections.length - 1];
+                 if (lastSection) currentSectionId = lastSection.getAttribute('id');
+            }
+
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === `#${currentSectionId}`) {
+                    link.classList.add('active');
+                }
+            });
+
+            if (!currentSectionId && window.scrollY < sections[0].offsetTop) {
+                 const homeLink = document.querySelector('.nav-link[href="#hero"]');
+                 if(homeLink) homeLink.classList.add('active');
+            }
+        }
+
+        function closeMobileMenu() {
+            const menuToggle = document.getElementById('menu-toggle');
+            if (menuToggle && menuToggle.checked) menuToggle.checked = false;
+        }
+
+        window.addEventListener('scroll', handleScroll);
+        document.addEventListener('DOMContentLoaded', () => {
+            setPresentationDate();
+            handleScroll();
+            navLinks.forEach(link => link.addEventListener('click', closeMobileMenu));
+
+            if (document.getElementById('webapp-map-container')) {
+                initWebAppMap();
+            }
+            if (document.getElementById('device-3d-container')) {
+                init3DDevice();
+            }
+            // Removed CSS Art Init calls
+        });
+
+        let webAppMap;
+        let webAppBusMarkers = [];
+        let webAppStopMarkersLayer;
+        let webAppUserLocationMarker;
+
+        function initWebAppMap() {
+            const digosLat = 6.751;
+            const digosLng = 125.356;
+            webAppMap = L.map('webapp-map', {
+                center: [digosLat, digosLng],
+                zoom: 14,
+                zoomControl: true
+            });
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                maxZoom: 19,
+                attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OSM</a>'
+            }).addTo(webAppMap);
+            webAppMap.zoomControl.setPosition('topright');
+
+            const stops = [
+                { name: 'Digos City Central Terminal', lat: 6.747, lng: 125.356, code: 'DCT' },
+                { name: 'Gaisano Grand Mall Stop', lat: 6.755, lng: 125.358, code: 'GGM' },
+                { name: 'Public Market Stop', lat: 6.748, lng: 125.352, code: 'PMS' },
+                { name: 'Hospital Junction', lat: 6.752, lng: 125.350, code: 'HOS' },
+                { name: 'MSU Campus Gate', lat: 6.760, lng: 125.362, code: 'MSU' }
+            ];
+
+            webAppBusMarkers = [
+                { id: 101, route: 'A', lat: 6.758, lng: 125.360, marker: null, dir: {lat: 0.00005, lng: -0.00003} },
+                { id: 201, route: 'B', lat: 6.750, lng: 125.350, marker: null, dir: {lat: 0.00006, lng: 0.00002} },
+                { id: 301, route: 'C', lat: 6.746, lng: 125.359, marker: null, dir: {lat: 0.00007, lng: 0.00001} },
+                { id: 401, route: 'D', lat: 6.765, lng: 125.365, marker: null, dir: {lat: 0.00008, lng: 0.00005} },
+                { id: 601, route: 'F', lat: 6.743, lng: 125.351, marker: null, dir: {lat: 0.00002, lng: 0.00007} }
+            ];
+
+            webAppStopMarkersLayer = L.layerGroup().addTo(webAppMap);
+
+            const stopIcon = L.divIcon({
+                html: `<div class="stop-marker-icon"></div>`,
+                className: 'leaflet-div-icon', iconSize: [10, 10], iconAnchor: [5, 5]
+            });
+
+            stops.forEach(stop => {
+                 L.marker([stop.lat, stop.lng], { icon: stopIcon })
+                     .bindPopup(`<b>${stop.name} (${stop.code})</b>`)
+                     .addTo(webAppStopMarkersLayer);
+             });
+
+            renderWebAppBusMarkers();
+            setInterval(animateWebAppBuses, 2500);
+
+             setTimeout(() => { if (webAppMap) webAppMap.invalidateSize(); }, 100);
+        }
+
+        function createWebAppBusIcon(route) {
+             let bgColorClass = 'bg-gray-500';
+            if (route === 'A') bgColorClass = 'bus-marker-a';
+            else if (route === 'B') bgColorClass = 'bus-marker-b';
+            else if (route === 'C') bgColorClass = 'bus-marker-c';
+            else if (route === 'D') bgColorClass = 'bus-marker-d';
+            else if (route === 'E') bgColorClass = 'bus-marker-e';
+            else if (route === 'F') bgColorClass = 'bus-marker-f';
+            else if (route === 'G') bgColorClass = 'bus-marker-g';
+
+            return L.divIcon({
+                html: `<div class="bus-marker-icon ${bgColorClass}">${route}</div>`,
+                className: 'leaflet-div-icon', iconSize: [22, 22], iconAnchor: [11, 11]
+            });
+        }
+
+        function renderWebAppBusMarkers() {
+             webAppBusMarkers.forEach(bus => {
+                 let popupContent = `<b>PUV #${bus.id} (Route ${bus.route})</b><p>Status: En route</p>`;
+                 if (!bus.marker) {
+                     bus.marker = L.marker([bus.lat, bus.lng], { icon: createWebAppBusIcon(bus.route) })
+                         .bindPopup(popupContent)
+                         .addTo(webAppMap);
+                 } else {
+                     bus.marker.setLatLng([bus.lat, bus.lng]).setPopupContent(popupContent);
+                 }
+             });
+        }
+
+        function animateWebAppBuses() {
+            const baseMoveFactor = 0.00020;
+            const bounds = { minLat: 6.73, maxLat: 6.78, minLng: 125.34, maxLng: 125.38 };
+
+            webAppBusMarkers.forEach(bus => {
+                const latRand = (Math.random() - 0.5) * baseMoveFactor * 0.5;
+                const lngRand = (Math.random() - 0.5) * baseMoveFactor * 0.5;
+                bus.lat += bus.dir.lat * baseMoveFactor + latRand;
+                bus.lng += bus.dir.lng * baseMoveFactor + lngRand;
+
+                if (bus.lat < bounds.minLat || bus.lat > bounds.maxLat) {
+                    bus.dir.lat *= -1;
+                    bus.lat = Math.max(bounds.minLat, Math.min(bounds.maxLat, bus.lat));
+                }
+                if (bus.lng < bounds.minLng || bus.lng > bounds.maxLng) {
+                    bus.dir.lng *= -1;
+                    bus.lng = Math.max(bounds.minLng, Math.min(bounds.maxLng, bus.lng));
+                }
+                if (bus.marker) bus.marker.setLatLng([bus.lat, bus.lng]);
+            });
+        }
+
+        let deviceScene, deviceCamera, deviceRenderer, deviceControls;
+        let deviceGroup3D;
+        let deviceRaycaster, deviceMouse;
+        let deviceLabelSprites = [];
+        let deviceImagePopupDiv, devicePopupImg, devicePopupCaption;
+
+        const deviceComponentImages = {
+            "MCU (e.g., ESP32)": { src: "imgs/esp32.jpg", alt: "ESP32 Microcontroller" },
+            "GPS (e.g., NEO-6M)": { src: "imgs/gps.jpg", alt: "NEO-6M GPS Module" },
+            "Modem (e.g., SIM800L)": { src: "imgs/gsm-gprs.webp", alt: "SIM800L Cellular Modem" },
+            "Power Converter": { src: "imgs/powersupply.jpg", alt: "Power Converter Unit" },
+           
+        };
+
+        function createTextSprite(message, parameters) {
+            parameters = parameters || {};
+            const fontface = parameters.fontface || 'Arial';
+            const fontsize = parameters.fontsize || 16;
+            const backgroundColor = { r:60, g:70, b:88, a:0.7 };
+            const textColor = { r:240, g:240, b:240, a:1.0 };
+            const canvas = document.createElement('canvas');
+            const context = canvas.getContext('2d');
+            context.font = "Bold " + fontsize + "px " + fontface;
+            const metrics = context.measureText(message);
+            const textWidth = metrics.width;
+            const padding = 5;
+            canvas.width = textWidth + padding * 2;
+            canvas.height = fontsize * 1.2 + padding * 2;
+            context.font = "Bold " + fontsize + "px " + fontface;
+            context.fillStyle = `rgba(${backgroundColor.r}, ${backgroundColor.g}, ${backgroundColor.b}, ${backgroundColor.a})`;
+            const radius = 4;
+            context.beginPath();
+            context.moveTo(radius, 0);
+            context.lineTo(canvas.width - radius, 0);
+            context.quadraticCurveTo(canvas.width, 0, canvas.width, radius);
+            context.lineTo(canvas.width, canvas.height - radius);
+            context.quadraticCurveTo(canvas.width, canvas.height, canvas.width - radius, canvas.height);
+            context.lineTo(radius, canvas.height);
+            context.quadraticCurveTo(0, canvas.height, 0, canvas.height - radius);
+            context.lineTo(0, radius);
+            context.quadraticCurveTo(0, 0, radius, 0);
+            context.closePath();
+            context.fill();
+            context.fillStyle = `rgba(${textColor.r}, ${textColor.g}, ${textColor.b}, ${textColor.a})`;
+            context.fillText( message, padding, fontsize + padding - (fontsize * 0.1));
+            const texture = new THREE.CanvasTexture(canvas);
+            texture.needsUpdate = true;
+            const spriteMaterial = new THREE.SpriteMaterial({ map: texture });
+            const sprite = new THREE.Sprite(spriteMaterial);
+            sprite.scale.set(canvas.width * 0.012, canvas.height * 0.012, 1.0);
+            sprite.name = message;
+            return sprite;
+        }
+
+        function init3DDevice() {
+            const container = document.getElementById('device-3d-container');
+            if (!container) return;
+
+            deviceImagePopupDiv = document.getElementById('image-popup');
+            devicePopupImg = document.getElementById('popup-img');
+            devicePopupCaption = document.getElementById('popup-caption');
+
+            deviceScene = new THREE.Scene();
+            deviceScene.background = new THREE.Color(0xe2e8f0);
+
+            const width = container.clientWidth;
+            const height = container.clientHeight;
+
+            deviceCamera = new THREE.PerspectiveCamera(60, width / height, 0.1, 1000);
+            deviceCamera.position.set(4, 4, 7);
+
+            deviceRenderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+            deviceRenderer.setSize(width, height);
+            deviceRenderer.shadowMap.enabled = true;
+            deviceRenderer.shadowMap.type = THREE.PCFSoftShadowMap;
+            container.appendChild(deviceRenderer.domElement);
+
+            const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
+            deviceScene.add(ambientLight);
+            const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
+            directionalLight.position.set(5, 10, 7.5);
+            directionalLight.castShadow = true;
+            directionalLight.shadow.mapSize.width = 512;
+            directionalLight.shadow.mapSize.height = 512;
+            directionalLight.shadow.camera.near = 1;
+            directionalLight.shadow.camera.far = 30;
+            directionalLight.shadow.camera.left = -8;
+            directionalLight.shadow.camera.right = 8;
+            directionalLight.shadow.camera.top = 8;
+            directionalLight.shadow.camera.bottom = -8;
+            deviceScene.add(directionalLight);
+
+            deviceGroup3D = new THREE.Group();
+
+            const boxWidth = 4, boxHeight = 2, boxDepth = 3;
+            const boxRadius = 0.1;
+            const boxSegments = 4;
+            const roundedBoxGeometry = new THREE.RoundedBoxGeometry(boxWidth, boxHeight, boxDepth, boxSegments, boxRadius);
+            const boxMaterial = new THREE.MeshStandardMaterial({ color: 0x374151, roughness: 0.5, metalness: 0.1 });
+            const mainBox = new THREE.Mesh(roundedBoxGeometry, boxMaterial);
+            mainBox.castShadow = true;
+            deviceGroup3D.add(mainBox);
+
+            function create3DAntenna(xPos, height, radius, labelText) {
+                const antennaGroup = new THREE.Group();
+                const baseHeight = 0.2; const baseRadius = radius * 1.5;
+                const baseGeo = new THREE.CylinderGeometry(baseRadius, baseRadius, baseHeight, 16);
+                const baseMat = new THREE.MeshStandardMaterial({ color: 0x2d3748, roughness: 0.6 });
+                const base = new THREE.Mesh(baseGeo, baseMat);
+                base.position.y = boxHeight / 2 + baseHeight / 2;
+                base.castShadow = true;
+                antennaGroup.add(base);
+                const shaftGeo = new THREE.CylinderGeometry(radius, radius, height, 16);
+                const shaftMat = new THREE.MeshStandardMaterial({ color: 0x1f2937, roughness: 0.4 });
+                const shaft = new THREE.Mesh(shaftGeo, shaftMat);
+                shaft.position.y = base.position.y + baseHeight / 2 + height / 2;
+                shaft.castShadow = true;
+                antennaGroup.add(shaft);
+                const label = createTextSprite(labelText, { fontsize: 18 });
+                label.position.y = shaft.position.y + height / 2 + 0.3;
+                deviceLabelSprites.push(label);
+                antennaGroup.add(label);
+                antennaGroup.position.x = xPos;
+                return antennaGroup;
+            }
+            deviceGroup3D.add(create3DAntenna(-1.5, 2.0, 0.15, "GPS Antenna"));
+            deviceGroup3D.add(create3DAntenna(1.5, 1.8, 0.2, "Cellular Antenna"));
+
+            const ledGeometry = new THREE.SphereGeometry(0.1, 16, 8);
+            const ledMaterial = new THREE.MeshBasicMaterial({ color: 0x4ade80 });
+            const ledLight = new THREE.Mesh(ledGeometry, ledMaterial);
+            ledLight.position.set(0, boxHeight * 0.3, boxDepth / 2 + 0.01);
+            deviceGroup3D.add(ledLight);
+
+            const labelYOffset = boxHeight / 2 + 0.2;
+            const mcuLabel = createTextSprite("MCU (e.g., ESP32)", { fontsize: 14 });
+            mcuLabel.position.set(-boxWidth * 0.25, labelYOffset, -boxDepth * 0.25);
+            deviceLabelSprites.push(mcuLabel);
+            deviceGroup3D.add(mcuLabel);
+            const modemLabel = createTextSprite("Modem (e.g., SIM800L)", { fontsize: 14 });
+            modemLabel.position.set(boxWidth * 0.25, labelYOffset, -boxDepth * 0.25);
+            deviceLabelSprites.push(modemLabel);
+            deviceGroup3D.add(modemLabel);
+            const gpsModuleLabel = createTextSprite("GPS (e.g., NEO-6M)", { fontsize: 14 });
+            gpsModuleLabel.position.set(-boxWidth * 0.25, labelYOffset, boxDepth * 0.25);
+            deviceLabelSprites.push(gpsModuleLabel);
+            deviceGroup3D.add(gpsModuleLabel);
+            const powerLabel = createTextSprite("Power Converter", { fontsize: 14 });
+            powerLabel.position.set(boxWidth * 0.25, labelYOffset, boxDepth * 0.25);
+            deviceLabelSprites.push(powerLabel);
+            deviceGroup3D.add(powerLabel);
+
+            const portGeometry = new THREE.BoxGeometry(0.5, 0.3, 0.1);
+            const portMaterial = new THREE.MeshStandardMaterial({ color: 0x1a202c, metalness: 0.6, roughness: 0.3 });
+            const port = new THREE.Mesh(portGeometry, portMaterial);
+            port.position.set(0, -boxHeight * 0.4, boxDepth / 2 + 0.01);
+            port.castShadow = true;
+            deviceGroup3D.add(port);
+
+            const screwGeo = new THREE.CircleGeometry(0.05, 12);
+            const screwMat = new THREE.MeshStandardMaterial({ color: 0x1a202c, side: THREE.DoubleSide });
+            function addScrew(x, z) {
+                const screw = new THREE.Mesh(screwGeo, screwMat);
+                screw.position.set(x, boxHeight / 2 + 0.01, z);
+                screw.rotation.x = -Math.PI / 2;
+                deviceGroup3D.add(screw);
+            }
+            const cornerOffset = 0.2;
+            addScrew(boxWidth / 2 - cornerOffset, boxDepth / 2 - cornerOffset);
+            addScrew(-boxWidth / 2 + cornerOffset, boxDepth / 2 - cornerOffset);
+            addScrew(boxWidth / 2 - cornerOffset, -boxDepth / 2 + cornerOffset);
+            addScrew(-boxWidth / 2 + cornerOffset, -boxDepth / 2 + cornerOffset);
+
+            deviceScene.add(deviceGroup3D);
+
+            deviceRaycaster = new THREE.Raycaster();
+            deviceMouse = new THREE.Vector2();
+
+            deviceControls = new THREE.OrbitControls(deviceCamera, deviceRenderer.domElement);
+            deviceControls.enableDamping = true;
+            deviceControls.dampingFactor = 0.05;
+            deviceControls.screenSpacePanning = false;
+            deviceControls.minDistance = 3;
+            deviceControls.maxDistance = 15;
+            deviceControls.maxPolarAngle = Math.PI / 1.5;
+             deviceControls.minPolarAngle = Math.PI / 4;
+
+            const resizeObserver = new ResizeObserver(entries => {
+                for (let entry of entries) {
+                    const { width, height } = entry.contentRect;
+                    if (deviceCamera && deviceRenderer) {
+                        deviceCamera.aspect = width / height;
+                        deviceCamera.updateProjectionMatrix();
+                        deviceRenderer.setSize(width, height);
+                    }
+                }
+            });
+            resizeObserver.observe(container);
+
+            deviceRenderer.domElement.addEventListener('mousemove', onDeviceMouseMove, false);
+            deviceRenderer.domElement.addEventListener('mouseleave', () => {
+                 if(deviceImagePopupDiv) deviceImagePopupDiv.style.display = 'none';
+            }, false);
+
+
+            animate3DDevice();
+        }
+
+        function onDeviceMouseMove(event) {
+            const container = document.getElementById('device-3d-container');
+            const rect = container.getBoundingClientRect();
+
+            deviceMouse.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
+            deviceMouse.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
+
+            deviceRaycaster.setFromCamera(deviceMouse, deviceCamera);
+            const intersects = deviceRaycaster.intersectObjects(deviceLabelSprites);
+
+            if (intersects.length > 0) {
+                const hoveredLabelName = intersects[0].object.name;
+                const imageData = deviceComponentImages[hoveredLabelName];
+
+                if (imageData && deviceImagePopupDiv) {
+                    devicePopupImg.src = imageData.src;
+                    devicePopupImg.alt = imageData.alt;
+                    devicePopupCaption.textContent = imageData.alt;
+                    deviceImagePopupDiv.style.display = 'block';
+
+                    const offsetX = 10;
+                    const offsetY = 10;
+                    let popupLeft = (event.clientX - rect.left + offsetX);
+                    let popupTop = (event.clientY - rect.top + offsetY);
+
+                    if (popupLeft + deviceImagePopupDiv.offsetWidth > rect.width) {
+                        popupLeft = (event.clientX - rect.left - deviceImagePopupDiv.offsetWidth - offsetX);
+                    }
+                     if (popupTop + deviceImagePopupDiv.offsetHeight > rect.height) {
+                        popupTop = (event.clientY - rect.top - deviceImagePopupDiv.offsetHeight - offsetY);
+                    }
+
+                    deviceImagePopupDiv.style.left = popupLeft + 'px';
+                    deviceImagePopupDiv.style.top = popupTop + 'px';
+
+                } else {
+                    if(deviceImagePopupDiv) deviceImagePopupDiv.style.display = 'none';
+                }
+            } else {
+                 if(deviceImagePopupDiv) deviceImagePopupDiv.style.display = 'none';
+            }
+        }
+
+        function animate3DDevice() {
+            requestAnimationFrame(animate3DDevice);
+            if (deviceControls) deviceControls.update();
+            if (deviceRenderer && deviceScene && deviceCamera) {
+                deviceRenderer.render(deviceScene, deviceCamera);
+            }
+        }
+
+    </script>
+
+</body>
+</html>
